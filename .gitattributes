@@ -1,0 +1,48 @@
+# Ensure all text files use LF line endings (consistent across OS)
+* text=auto eol=lf
+
+# Explicitly define common text file types
+*.py text
+*.md text
+*.txt text
+*.env text
+*.json text
+*.yaml text
+*.yml text
+*.toml text
+*.ini text
+*.cfg text
+*.gitignore text
+*.gitattributes text
+
+# Keep binary files untouched
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.exe binary
+*.dll binary
+*.so binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.7z binary
+*.bin binary
+
+# Normalize unicode and prevent diff noise for Windows paths
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Avoid diffs for lockfiles or data files that don’t benefit from diffing
+*.lock -diff
+*.db -diff
+*.dat -diff
+*.bin -diff
+*.pkl -diff
+*.npy -diff
+
+# GitHub linguist overrides (to show Python and docs correctly)
+*.md linguist-detectable=true
+*.py linguist-detectable=true
+data/** linguist-documentation=true

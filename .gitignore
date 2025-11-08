@@ -1,0 +1,57 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# === Virtual environments ===
+venv/
+.env/
+.venv/
+env/
+ENV/
+*.env
+
+# === Logs and runtime data ===
+*.log
+*.pid
+*.out
+*.tmp
+*.bak
+data/logs/
+logs/
+tmp/
+cache/
+
+# === IDE / Editor files ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+.DS_Store
+Thumbs.db
+
+# === OS files ===
+ehthumbs.db
+Icon?
+desktop.ini
+
+# === LM Studio related (just in case) ===
+lmstudio_cache/
+lmstudio_data/
+lmstudio_models/
+*.bin
+
+# === Backups / artifacts ===
+*.old
+*.bak
+*.orig
+*.save
+*.zip
+*.tar.gz
