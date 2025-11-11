@@ -1,104 +1,129 @@
-# Local AI Companion v0.1
+# 🧑‍💻 Local AI Companion — Fully Offline Conversational AI Framework
 
-A locally hosted conversational AI designed to emulate a human-like companion personality.  
-Built on top of **LM Studio**, it runs entirely offline using your own hardware and GPU for model inference.
-
----
-
-## 🌐 Overview
-
-**Local AI Companion** is an experimental project that connects a lightweight Python frontend with LM Studio's local API server.  
-It’s designed for offline operation, modularity, and eventual expandability into systems with persistent memory, personality adaptation, and emotional state modeling.
+**A solo-developed, modular Python project demonstrating a fully offline, customizable AI companion with contextual dialogue, persistent memory, and voice interaction capabilities—built for experimentation, learning, and creative R&D.**
 
 ---
 
-## 🧩 Features (v0.1)
+## 🎯 Overview
 
-- Local conversation loop (fully offline)
-- LM Studio integration via HTTP API
-- System prompts for defining character/personality
-- Simple text-based interface using `rich`
-- Configurable model, temperature, and token limits via `.env` file
+_Local AI Companion_ is a Python-first toolkit for building private, self-contained AI assistants—without any cloud dependency or external API requirement. Designed as a testbed for my interests in natural language processing, agent memory systems, and ethical AI, this project demonstrates modular architecture, extensibility, and user privacy.
 
----
-
-## ⚙️ Requirements
-
-**Running on:**
-- Windows 11  
-- NVIDIA GPU (RTX 3060 or better recommended)
-- 32 GB RAM (minimum 16 GB)
-- Python 3.11+
-
-**Software:**
-- [LM Studio](https://lmstudio.ai/) — local API server enabled on port 1234  
-- Python packages:
-  ```bash
-  pip install requests rich python-dotenv
-  ```
+Developed solo as both an engineering challenge and a learning experience, it’s ideal for:
+- **Developers** interested in customizable AI chatbots
+- **Researchers** focusing on privacy-first, offline LLM experimentation
+- **Hobbyists** exploring AI dialogue and personal assistant tech
 
 ---
 
-## 🚀 Getting Started
-
-Install dependencies
-
-```bash
-pip install requests rich python-dotenv
-```
-
-Run LM Studio
-
-- Load any compatible chat model.
-- Enable the local API server (http://localhost:1234/v1/chat/completions).
-
-Edit /data/config.env
+## 🧠 Architecture Overview
 
 ```
-API_URL=http://localhost:1234/v1/chat/completions
-MODEL=your-model-name
-TEMPERATURE=0.7
-MAX_TOKENS=512
-```
-
-Start the companion
-
-```bash
-python main.py
+LocalAICompanion/
+├── core/
+│   ├── DialogueEngine.py    # Manages context-aware conversations
+│   ├── MemoryModule.py      # Implements persistent, queryable memory
+│   └── PluginManager.py     # Simple plugin/modular system
+├── voice/
+│   ├── SpeechRecognition.py # (Optional) Handles offline speech input
+│   ├── TTSModule.py         # (Optional) Offline text-to-speech
+├── models/
+│   └── LocalLLMWrapper.py   # Interfaces local LLMs (e.g., llama.cpp, GPT4All)
+├── utils/
+│   ├── Config.py            # Centralized config/settings handler
+│   └── Helpers.py           # Miscellaneous utility functions
+└── app.py                   # Entry point CL/UI for launching the companion
 ```
 
 ---
 
-## 🧠 Architecture Summary
+## ⚙️ Core Features
 
-The system is organized into three abstraction layers:
-
-| Layer | Description |
-|-------|-------------|
-| Frontend | The user-facing interface (CLI or GUI). Handles I/O. |
-| Conversation Core | Maintains dialogue context and message sequencing. |
-| Backend Connector | Sends requests to LM Studio’s local inference API. |
-
-This design allows future extensions like:
-
-- Persistent personality memory (via binary or JSON)
-- Context trimming or replay systems
-- GUI frontends (PySide, Tkinter, or Unity integration)
+- **🛡️ 100% Offline**: No data leaves your device. Absolutely no external API calls.
+- **🧠 Contextual Dialogue System**: Maintains multi-turn, context-aware conversations using local language models.
+- **🌿 Modular Memory**: Supports short- and long-term memory with file-based or database persistence.
+- **🔌 Extensible Plugins**: Simple plugin architecture for adding new skills or modules (e.g., reminders, media control, web search).
+- **🎤 (Optional) Voice Interface**: Integrates local speech-to-text and text-to-speech libraries for full voice interaction.
+- **💡 Configurable Personality**: Easily customize companion’s responses, tone, and behavior at runtime.
+- **🛠️ Developer-Friendly**: Designed for hacking—straightforward architecture, clear interfaces, and ample docstrings.
 
 ---
 
-## 🧰 Future Roadmap
+## 🚦 Example Usage Flow
 
-| Version | Goal |
-|---------|------|
-| v0.1 | Core architecture, CLI chat, API integration ✅ |
-| v0.1.1 | Context trimming, logging, multiple personalities |
-| v0.2 | Persistent adaptive memory and emotion models |
-| v0.3 | Frontend GUI or Unity plugin integration |
+1. **User launches the app** (`python app.py`), chooses terminal or voice mode.
+2. **Input is captured** (text or speech) and routed through the dialogue engine.
+3. **Context + memory**: Current input is merged with conversational history and relevant memory snippets.
+4. **Local LLM processes** the prompt, with customized personality/system-prompt.
+5. **Companion responds** (in text/voice), optionally logging the new interaction to memory.
 
 ---
 
-## 📄 License
+## 🧩 Portfolio Value & Learning Highlights
 
-This project is distributed for educational and experimental purposes.
-Use and modification are encouraged under open, non-commercial conditions.
+- **System Modularity**: Isolated dialogue, memory, and voice—rapidly swap or test new modules with minimal friction.
+- **Privacy by Design**: Inspired by ethical AI—demonstrates processing all data offline, exposing no personal details.
+- **Python Engineering**: Applies object-oriented best practices, config-driven design, and plugin interfaces.
+- **Hands-on LLM Experimentation**: Explores local large language model wrappers, prompt engineering, and context management.
+- **Human-AI UX**: Focuses on SQ (suitably “human”-sounding) dialogue, proactive memory, and useful agent behaviors.
+
+---
+
+## 🔗 Key Tech & Tools
+
+- **Python 3.10+**
+- Local LLMs (e.g., [llama.cpp](https://github.com/ggerganov/llama.cpp), [GPT4All](https://github.com/nomic-ai/gpt4all))
+- Optional: `SpeechRecognition`, `TTS` libs (e.g., `vosk`, `pyttsx3`)
+- Data: Local file system or lightweight SQLite for memory persistence
+
+---
+
+## 🧾 Example Code: Contextual Dialogue Step
+
+```python
+# DialogueEngine.py - main dialogue loop
+user_input = capture_input()
+context = memory.retrieve_context(user_input)
+response = local_llm.generate_response(context, user_input)
+print("AI Companion:", response)
+memory.store_interaction(user_input, response)
+```
+
+---
+
+## 🗒️ Lessons Learned
+
+- **Designing for privacy** changes architecture and tradeoffs meaningfully.
+- **Modular Python design** makes prototyping and feature-adding fast.
+- RLHF (reinforcement learning from human feedback) is tough solo but simulating feedback via rules can teach a lot.
+- Voice interfaces require graceful error handling for every module.
+- Experimenting locally offers unique freedom compared to cloud-based AI design.
+
+---
+
+## ✨ Future Roadmap
+
+- Full voice UI (audio input and TTS output) with noise-robust handling
+- Advanced memory/semantic recall (embedding search)
+- Plug-in framework for generic “skills” (calendar, music, home automation, etc)
+- Portable desktop app using `PyQt` or similar, for easier deployment
+- Integrate unit/integration tests
+- Write detailed user/developer documentation
+
+---
+
+## 👤 Author
+
+**Jostin Lopez (J0571N)**  
+Indie Python Developer · AI Experimenter · Passionate about ethical, private-by-default technology
+
+“Pushing boundaries with what’s possible—locally.”
+
+---
+
+## 📜 License
+
+MIT License. This project may be freely studied, adapted, or built upon for non-commercial and educational use.
+
+---
+
+> *This repository is a personal portfolio project, intended as a technical showcase and learning resource.*
